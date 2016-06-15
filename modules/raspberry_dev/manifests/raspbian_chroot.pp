@@ -11,7 +11,7 @@ class raspberry_dev::raspbian_chroot {
 
   $bootstrap_cmd = 
       "fakeroot debootstrap --verbose --foreign --variant=scratchbox \
-        --arch armhf --keyring /etc/apt/trusted.gpg wheezy \
+        --arch armhf jessie \
         ${raspberry_dev::config::sbox2_container_path} ${raspbian_mirror}"
 
   # without this, sbox2 sees HOME as "/root" for some reason, and all sb2 
