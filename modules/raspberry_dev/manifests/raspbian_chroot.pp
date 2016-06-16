@@ -29,7 +29,9 @@ class raspberry_dev::raspbian_chroot {
   } -> exec {'raspbian-install-key':
     command => 'curl http://archive.raspbian.org/raspbian.public.key | apt-key add -',
     unless  => 'apt-key list | grep "Raspberry Pi Debian"'
-
+  } -> exec {'fix-debootstrap-script':
+    command => 'ln -s /usr/share/debootstrap/scripts/sid /usr/share/debootstrap/scripts/jessie',
+    unless => 'ls /usr/share/debootstrap/scripts | grep jessie'
   } -> exec {'debootstrap-first-stage':
     command => $bootstrap_cmd,
     environment => $sbox2_required_env_flags,
