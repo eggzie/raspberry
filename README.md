@@ -7,7 +7,7 @@ This VM includes a sandboxed installation ("chroot") of [Raspbian](http://www.ra
 Why is this so nice? Suppose you have C++ app that you want to build for the Raspberry Pi, but it requires a bunch of third-party libraries. Do you really want to hunt down these libraries, their dependencies, their dependencies dependencies, their dependencies dependencies dependencies and so on, until you're able to build your own app? It should be clear that that way lies madness. Perhaps you'll just copy the headers and libraries from your Raspberry to your Intel box, and point your compiler at those. That might work, but it'll be fragile and annoying.
 
 How about we let the Raspbian folks do all the hard work? With ScratchBox2, you can simply apt-get to your heart's content. Just type:
-        
+
         sb2 -eR apt-get install ...
 
 This executes `apt-get` in the default ScratchBox2 container (in our case, we only have the one. It's called "raspberry".) The `-e` flag is for chroot (emulated) mode; `-R` runs the command as the equivalent of *root* in the sandboxed environment. For a slightly more thorough explanation of ScratchBox2, see these presentation slides: <http://www.daimi.au.dk/~cvm/sb2.pdf>.
@@ -20,7 +20,7 @@ This executes `apt-get` in the default ScratchBox2 container (in our case, we on
 
 Vagrant will now download the basebox, bootstrap the environment and run the provisioner for the first time. Since the basebox and numerous packages must be downloaded, the first run may take some time depending on your network connection. No supervision should be required; running the install overnight should be just fine. Future runs will be much faster, and won't require network connectivity.
 
-If like to see words dribble down your screen, you can monitor the bootstrap progress by running `vagrant ssh` to ssh into your VM, and then `tail -F ~/raspberry-dev/rootfs/debootstrap/debootstrap.log`)
+If like to see words dribble down your screen, you can monitor the bootstrap progress by running `vagrant ssh` to ssh into your VM, and then `tail -F ~/raspberry-dev/rootfs/debootstrap/debootstrap.log`
 
 After installation has completed, you should find:
 
@@ -30,6 +30,11 @@ After installation has completed, you should find:
     - the official [GCC 4.8.3 cross-compiler toolchain](https://github.com/raspberrypi/tools): `arm-linux-gnueabihf-gcc`, `arm-linux-gnueabihf-ld` and so on.
     - [QEmu](http://wiki.qemu.org/Main_Page) 1.3.0
     - [ScratchBox2](http://maemo.gitorious.org/scratchbox2) @ git tag 2.3.90 (earlier releases didn't seem to work)
+
+The default configuration allocates 4 CPU cores and 4 GB of RAM to the VM. This can be configured by editing the following lines in the `Vagrantfile`:
+
+    v.memory = 4096
+    v.cpus = 4
 
 ## Example Usage
 
