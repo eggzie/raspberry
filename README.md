@@ -1,6 +1,6 @@
 # Raspberry Pi Devbox
 
-A [Vagrant](http://vagrantup.com) recipe for an Ubuntu 12.04 virtual machine, intented to make C/C++ development for Raspberry Pi a less painful experience. This is a fork of <https://github.com/Asquera/raspberry-devbox>.
+A [Vagrant](http://vagrantup.com) recipe for an Ubuntu 12.04 virtual machine, intented to make C/C++ development for Raspberry Pi a less painful experience. Forked from <https://github.com/nickhutchinson/raspberry-devbox> and updated to use a Raspbian 8 Jessie chroot and the latest [Raspberry Pi cross-compiler toolchain (gcc 4.8.3)](https://github.com/raspberrypi/tools).
 
 This VM includes a sandboxed installation ("chroot") of [Raspbian](http://www.raspbian.org), an ARM variant of the Debian Linux distribution optimized for Raspberry Pi. Use of the sandbox is mediated by a cross-compiling tool called [ScratchBox2](http://maemo.gitorious.org/scratchbox2). ScratchBox2 craftily translates the ARM executables bundled with Raspbian such that they run on your Intel box.
 
@@ -27,9 +27,16 @@ After installation has completed, you should find:
 - In `~/raspberry-dev/rootfs`
     - the [Raspbian](http://www.raspbian.org) chroot.
 - In `/opt/raspberry-dev`
-    - the official [GCC 4.7.2 cross-compiler toolchain](https://github.com/raspberrypi/tools): `arm-linux-gnueabihf-gcc`, `arm-linux-gnueabihf-ld` and so on.
+    - the official [GCC 4.8.3 cross-compiler toolchain](https://github.com/raspberrypi/tools): `arm-linux-gnueabihf-gcc`, `arm-linux-gnueabihf-ld` and so on.
     - [QEmu](http://wiki.qemu.org/Main_Page) 1.3.0
     - [ScratchBox2](http://maemo.gitorious.org/scratchbox2) @ git tag 2.3.90 (earlier releases didn't seem to work)
+
+## Example Usage
+
+* Starting the VM: in the program root directory, run `vagrant up` to start the VM, then `vagrant ssh` to enter it.
+* `sb2 make` make using host cross compiler toolchain.
+* `sb2 -e make` make using emulated target toolchain.
+* `sb2 -eR make install` install in emulation mode as root.
 
 ## VirtualBox
 
@@ -50,11 +57,5 @@ The basic virtualization layer is [VirtualBox](https://www.virtualbox.org). Any 
 
 Provisioning of the Virtual Machine is handled by [Puppet](http://puppetlabs.com). Take a look at the `raspberry_dev` module.
 
-## Bugs, fixes, improvements
-
-If you encounter a problem, please file a ticket. If you can help improve this Virtual Machine recipe please let me know; I'm very new to Vagrant, Puppet, ScratchBox2 and Raspberry Pi, and barely know what I'm doing!
-
-## Todo
-
-* all of this is still quite rough
-* improve on the readme
+## Bugs
+* Some programs such as aptitude crash with segfault when run in emulation mode. Updated qemu might fix this
