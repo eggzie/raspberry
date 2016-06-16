@@ -1,6 +1,6 @@
 # Raspberry Pi Devbox
 
-A [Vagrant](http://vagrantup.com) recipe for an Ubuntu 12.04 virtual machine, intented to make C/C++ development for Raspberry Pi a less painful experience. Forked from <https://github.com/nickhutchinson/raspberry-devbox> and updated to use a Raspbian 8 Jessie chroot and the latest [Raspberry Pi cross-compiler toolchain (gcc 4.8.3)](https://github.com/raspberrypi/tools).
+A [Vagrant](http://vagrantup.com) recipe for an Ubuntu 12.04 virtual machine, intented to make C/C++ development for Raspberry Pi a less painful experience. Forked from <https://github.com/nickhutchinson/raspberry-devbox>, updated to use a Raspbian 8 Jessie chroot and the latest [Raspberry Pi cross-compiler toolchain (gcc 4.8.3)](https://github.com/raspberrypi/tools).
 
 This VM includes a sandboxed installation ("chroot") of [Raspbian](http://www.raspbian.org), an ARM variant of the Debian Linux distribution optimized for Raspberry Pi. Use of the sandbox is mediated by a cross-compiling tool called [ScratchBox2](http://maemo.gitorious.org/scratchbox2). ScratchBox2 craftily translates the ARM executables bundled with Raspbian such that they run on your Intel box.
 
