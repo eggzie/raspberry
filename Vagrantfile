@@ -6,7 +6,7 @@ Vagrant::Config.run do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  config.vm.define :nox do |box|
+  config.vm.define :nox1 do |box|
     # Every Vagrant virtual environment requires a box to build off of.
     box.vm.box = "precise64"
     # The url from where the 'config.vm.box' box will be fetched if it
@@ -25,4 +25,13 @@ Vagrant::Config.run do |config|
       puppet.options = ["--verbose", "--debug"]
     end
   end
+end
+
+Vagrant.configure("2") do |config|
+  
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 4096
+    v.cpus = 4
+  end
+
 end

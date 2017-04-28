@@ -1,15 +1,13 @@
 class raspberry_dev::toolchain {
-  $toolchain_url = 'http://commondatastorage.googleapis.com/howling-fantods/raspberrypi/raspberry-gcc-toolchain_1.0_i386.deb'
-  $toolchain_deb_filename = 'raspberry-gcc-toolchain_1.0_i386.deb'
+  $toolchain_url = 'https://github.com/raspberrypi/tools'
 
   exec {'download-toolchain':
-    command => "curl -L ${toolchain_url} -o ${toolchain_deb_filename}",
+    command => "git clone ${toolchain_url}",
     cwd => $raspberry_dev::config::debs_dir,
-    creates => "${raspberry_dev::config::debs_dir}/${toolchain_deb_filename}"
-
-  } -> package {'raspberry-gcc-toolchain': 
-    provider => dpkg, 
-    ensure => installed, 
-    source => "${raspberry_dev::config::debs_dir}/${toolchain_deb_filename}"
-  } 
+    creates => "${raspberry_dev::config::debs_dir}/tools"
+  } -> exec {'install-toolchain':
+    command => "cp -r arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/* \
+                ${raspberry_dev::config::tools_prefix}",
+    cwd => "${raspberry_dev::config::debs_dir}/tools"
+  }
 }

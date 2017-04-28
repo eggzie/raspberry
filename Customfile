@@ -1,0 +1,4 @@
+config.vm.provider "virtualbox" do |v|
+  v.memory = 3072
+  v.cpus = 4
+end
